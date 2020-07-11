@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ArrowNumberPicker">
+
+        <!-- Button Colors -->
+        <attr name="button_text_color" format="color"/>
+        <attr name="button_border_color" format="color"/>
+        <attr name="button_background_color" format="color"/>
+
+        <!-- Picker Colors -->
+        <attr name="picker_text_color" format="color"/>
+        <attr name="picker_background_color" format="color"/>
+
+        <!-- Button Dimens -->
+        <attr name="button_padding" format="dimension"/>
+        <attr name="button_border_width" format="dimension"/>
+        <attr name="button_width" format="dimension"/>
+        <attr name="button_text_size" format="dimension"/>
+
+        <!-- Picker Dimens -->
+        <attr name="picker_text_size" format="dimension" />
+
+    </declare-styleable>
+</resources>

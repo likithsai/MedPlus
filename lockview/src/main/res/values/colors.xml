@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="default_indicator">#99ffffff</color>
+    <color name="default_button_press">#66ffffff</color>
+    <color name="default_big_button_text_color">#ffffff</color>
+    <color name="default_title_text_color">#ffffff</color>
+</resources>
