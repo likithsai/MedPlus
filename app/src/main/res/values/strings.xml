@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Medic Plus</string>
+    <string name="version">V 1.0</string>
+    <string name="app_share_link" translatable="false">https://play.google.com/store/apps/details?id=tech.salroid.filmy</string>
+    <string name="shareappdetails">Share application to other users</string>
+</resources>

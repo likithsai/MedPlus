@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Database Settings">
+
+        <Preference
+            android:key="clear_database"
+            android:summary="Delete all the data from database"
+            android:title="Erase Data" />
+
+        <Preference
+            android:key="export_database"
+            android:summary="Export data to excel file"
+            android:title="Export Database" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Applock Settings">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="lock_application"
+            android:title="App Passcode"
+            android:summary="Lock application with passcode" />
+
+        <Preference
+            android:key="change_passcode"
+            android:summary="Change the Application Password"
+            android:title="Change Passcode" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:title="About">
+        <Preference
+            android:icon="@drawable/ic_info"
+            android:key="about"
+            android:summary="@string/version"
+            android:title="@string/app_name" />
+
+        <Preference
+            android:enabled="true"
+            android:icon="@drawable/ic_share"
+            android:key="share"
+            android:selectable="true"
+            android:title="@string/shareappdetails" />
+
+
+    </PreferenceCategory>
+</PreferenceScreen>
