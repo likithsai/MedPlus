@@ -460,9 +460,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_margin="2dip"
-                                    android:divider="@null">
-
-                                </ListView>
+                                    android:divider="@null" />
 
                             </TableRow>
 
@@ -476,17 +474,17 @@
                             android:layout_marginEnd="16dp"
                             android:layout_marginBottom="16dp"
                             android:clickable="true"
+                            android:text="Add Invoice"
+                            android:textColor="#fff"
+                            app:icon="@drawable/ic_add"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:icon="@drawable/ic_add"
-                            android:text="Add Invoice"
-                            android:textColor="#fff"
                             tools:ignore="MissingConstraints,VectorDrawableCompat" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-                </LinearLayout>
 
+                </LinearLayout>
 
 
                 <LinearLayout
@@ -494,6 +492,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center|top"
                     android:orientation="vertical"
+                    android:visibility="visible"
                     tools:ignore="UselessLeaf">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -510,8 +509,8 @@
 
                             <TableRow
                                 android:layout_width="match_parent"
-                                app:layout_scrollFlags="scroll|enterAlways"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                app:layout_scrollFlags="scroll|enterAlways">
 
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
@@ -581,8 +580,8 @@
                                                 <TextView
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
-                                                    android:textStyle="bold"
-                                                    android:text="Medicine Count" />
+                                                    android:text="Medicine Count"
+                                                    android:textStyle="bold" />
 
                                                 <TextView
                                                     android:id="@+id/medicine_count"
@@ -591,8 +590,8 @@
                                                     android:layout_marginTop="5dp"
                                                     android:gravity="center"
                                                     android:text="200"
-                                                    android:textStyle="bold"
-                                                    android:textSize="30sp" />
+                                                    android:textSize="30sp"
+                                                    android:textStyle="bold" />
 
                                             </LinearLayout>
 
@@ -624,82 +623,83 @@
                             android:id="@+id/addMedicines"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|end"
                             android:layout_margin="20dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginRight="16dp"
                             android:layout_marginBottom="16dp"
-                            android:visibility="gone"
                             android:clickable="true"
                             android:contentDescription="Add Medicines"
                             android:text="Add Medicines"
-                            android:layout_gravity="bottom|end"
+                            android:textColor="#fff"
+                            android:visibility="gone"
+                            app:icon="@drawable/ic_add"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:icon="@drawable/ic_add"
-                            android:textColor="#fff"
                             tools:ignore="MissingConstraints,VectorDrawableCompat" />
 
                         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                             android:id="@+id/expiredMedicines"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|end"
                             android:layout_margin="20dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginRight="16dp"
                             android:layout_marginBottom="16dp"
                             android:clickable="true"
-                            android:visibility="gone"
-                            android:layout_gravity="bottom|end"
                             android:contentDescription="Expired Medicines"
                             android:text="Expired Medicines"
+                            android:textColor="#fff"
+                            android:visibility="gone"
+                            app:icon="@drawable/ic_add"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:icon="@drawable/ic_add"
-                            android:textColor="#fff"
                             tools:ignore="MissingConstraints,VectorDrawableCompat" />
 
                         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                             android:id="@+id/outOfStockMedicines"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|end"
                             android:layout_margin="20dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginRight="16dp"
                             android:layout_marginBottom="16dp"
                             android:clickable="true"
-                            android:visibility="gone"
-                            android:layout_gravity="bottom|end"
                             android:contentDescription="Out of Stock Medicines"
                             android:text="Out of Stock Medicines"
+                            android:textColor="#fff"
+                            android:visibility="gone"
+                            app:icon="@drawable/ic_add"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            android:textColor="#fff"
-                            app:icon="@drawable/ic_add"
                             tools:ignore="MissingConstraints,VectorDrawableCompat" />
 
                         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                             android:id="@+id/displayOptions"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|end"
                             android:layout_margin="20dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginRight="16dp"
                             android:layout_marginBottom="16dp"
                             android:clickable="true"
-                            android:layout_gravity="bottom|end"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
                             android:contentDescription="Options"
                             android:text="Options"
                             android:textColor="#fff"
                             app:icon="@drawable/ic_add"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
                             tools:ignore="MissingConstraints,VectorDrawableCompat" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -707,6 +707,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center|top"
                     android:orientation="vertical"
+                    android:visibility="visible"
                     tools:ignore="UselessLeaf">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -792,8 +793,8 @@
                                                 <TextView
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
-                                                    android:textStyle="bold"
-                                                    android:text="Manufacturer Count" />
+                                                    android:text="Manufacturer Count"
+                                                    android:textStyle="bold" />
 
                                                 <TextView
                                                     android:id="@+id/manufacturer_count"
@@ -802,8 +803,8 @@
                                                     android:layout_marginTop="5dp"
                                                     android:gravity="center"
                                                     android:text="200"
-                                                    android:textStyle="bold"
-                                                    android:textSize="30sp" />
+                                                    android:textSize="30sp"
+                                                    android:textStyle="bold" />
 
                                             </LinearLayout>
 
@@ -823,10 +824,10 @@
                                     android:id="@+id/lst_manufacturer"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:layout_margin="2dip"
                                     android:cacheColorHint="@android:color/transparent"
                                     android:divider="@null"
-                                    android:listSelector="@android:color/transparent"
-                                    android:layout_margin="2dip"/>
+                                    android:listSelector="@android:color/transparent" />
                             </TableRow>
 
                         </TableLayout>
@@ -841,14 +842,15 @@
                             android:layout_marginBottom="16dp"
                             android:clickable="true"
                             android:text="Add Manufacturer"
+                            android:textColor="#fff"
+                            app:icon="@drawable/ic_add"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:icon="@drawable/ic_add"
-                            android:textColor="#fff"
                             tools:ignore="MissingConstraints,VectorDrawableCompat" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -941,8 +943,8 @@
                                                 <TextView
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
-                                                    android:textStyle="bold"
-                                                    android:text="Customer Count" />
+                                                    android:text="Customer Count"
+                                                    android:textStyle="bold" />
 
                                                 <TextView
                                                     android:id="@+id/customer_count"
@@ -951,8 +953,8 @@
                                                     android:layout_marginTop="5dp"
                                                     android:gravity="center"
                                                     android:text="200"
-                                                    android:textStyle="bold"
-                                                    android:textSize="30sp" />
+                                                    android:textSize="30sp"
+                                                    android:textStyle="bold" />
 
                                             </LinearLayout>
 
@@ -972,10 +974,10 @@
                                     android:id="@+id/lst_customer"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:layout_margin="2dip"
                                     android:cacheColorHint="@android:color/transparent"
                                     android:divider="@null"
-                                    android:listSelector="@android:color/transparent"
-                                    android:layout_margin="2dip" />
+                                    android:listSelector="@android:color/transparent" />
 
                             </TableRow>
 
@@ -990,17 +992,31 @@
                             android:layout_marginRight="16dp"
                             android:layout_marginBottom="16dp"
                             android:clickable="true"
+                            android:text="Add Customers"
+                            android:textColor="#fff"
+                            app:icon="@drawable/ic_add"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:icon="@drawable/ic_add"
-                            android:text="Add Customers"
-                            android:textColor="#fff"
                             tools:ignore="MissingConstraints,VectorDrawableCompat" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </LinearLayout>
             </ViewFlipper>
+
+            <TextView
+                android:id="@+id/emptyListview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_warning"
+                android:drawablePadding="5dp"
+                android:drawableTint="#ccc"
+                android:text="No Items"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomBar"

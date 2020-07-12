@@ -9,6 +9,8 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 import com.ajts.androidmads.library.SQLiteToExcel;
 import com.example.medicplus.R;
@@ -25,6 +27,10 @@ public class PreferenceActivity extends android.preference.PreferenceActivity {
         getFragmentManager().beginTransaction().replace(android.R.id.content, new MyPreferenceFragment()).commit();
 
     }
+
+
+
+
 
     public static class MyPreferenceFragment extends PreferenceFragment
     {

@@ -116,8 +116,8 @@ public class MainActivity extends AppCompatActivity {
         dl = findViewById(R.id.activity_main);
         store = findViewById(R.id.store);
         page = findViewById(R.id.page);
-        page.setInAnimation(this, android.R.anim.slide_in_left);
-        page.setOutAnimation(this, android.R.anim.slide_out_right);
+        //page.setInAnimation(this, android.R.anim.slide_in_left);
+        //page.setOutAnimation(this, android.R.anim.slide_out_right);
 
         loadHome();
 
@@ -271,6 +271,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         lAdapterInvoice = new ListAdapterInvoiceList(MainActivity.this, invoice_desc, invoice_date, invoice_price, invoice_qty, invoice_payment_type);
+        lst_invoice.setEmptyView(findViewById(R.id.emptyListview));
         lst_invoice.setAdapter(lAdapterInvoice);
 
 
@@ -302,6 +303,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 lAdapterInvoice = new ListAdapterInvoiceList(MainActivity.this, invoice_desc, invoice_date, invoice_price, invoice_qty, invoice_payment_type);
+                lst_invoice.setEmptyView(findViewById(R.id.emptyListview));
                 lst_invoice.setAdapter(lAdapterInvoice);
 
             }
@@ -371,6 +373,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         lAdapter = new ListAdapterMedicines(MainActivity.this, med_name, med_category, med_expired_date, med_selling_price, med_qty, med_images);
+        lst.setEmptyView(findViewById(R.id.emptyListview));
         lst.setAdapter(lAdapter);
 
 
@@ -551,6 +554,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 lAdapter = new ListAdapterMedicines(MainActivity.this, med_name, med_category, med_expired_date, med_selling_price, med_qty, med_images);
+                lst.setEmptyView(findViewById(R.id.emptyListview));
                 lst.setAdapter(lAdapter);
 
                 lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -663,14 +667,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         lAdapterManufacturer = new ListAdapterManufacturer(MainActivity.this, man_name, man_phone, man_images);
+        lst_manufacturer.setEmptyView(findViewById(R.id.emptyListview));
         lst_manufacturer.setAdapter(lAdapterManufacturer);
-
-        TextView emptyView = new TextView(MainActivity.this);
-        emptyView.setLayoutParams(new DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.FILL_PARENT, DrawerLayout.LayoutParams.FILL_PARENT));
-        emptyView.setText("No Manufacturers");
-        emptyView.setVisibility(View.GONE);
-        ((ViewGroup) lst_invoice.getParent()).addView(emptyView);
-        lst_invoice.setEmptyView(emptyView);
 
 
         addManufacturer.setOnClickListener(new View.OnClickListener() {
@@ -783,6 +781,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 lAdapterManufacturer = new ListAdapterManufacturer(MainActivity.this, man_name, man_phone, man_images);
+                lst_manufacturer.setEmptyView(findViewById(R.id.emptyListview));
                 lst_manufacturer.setAdapter(lAdapterManufacturer);
 
 
@@ -888,6 +887,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         lAdapterCustomer = new ListAdapterCustomer(MainActivity.this, cus_name, cus_phone, cus_images);
+        lst_customer.setEmptyView(findViewById(R.id.emptyListview));
         lst_customer.setAdapter(lAdapterCustomer);
 
 
@@ -1002,6 +1002,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 lAdapterCustomer = new ListAdapterCustomer(MainActivity.this, cus_name, cus_phone, cus_images);
+                lst_customer.setEmptyView(findViewById(R.id.emptyListview));
                 lst_customer.setAdapter(lAdapterCustomer);
 
 

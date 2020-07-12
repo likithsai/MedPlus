@@ -25,7 +25,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <TextView
+                    android:id="@+id/emptyListview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No Items"
+                    android:drawableTop="@drawable/ic_warning"
+                    android:drawableTint="#ccc"
+                    android:drawablePadding="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TableLayout
+                    android:id="@+id/tableLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:stretchColumns="0,1"
@@ -45,8 +59,86 @@
                             app:cardBackgroundColor="@color/colorPrimary"
                             app:cardCornerRadius="0dp"
                             app:layout_scrollFlags="scroll|enterAlways"
-                            tools:ignore="MissingConstraints"/>
+                            tools:ignore="MissingConstraints">
 
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="15dp"
+                                    android:layout_marginRight="15dp"
+                                    app:cardCornerRadius="0dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginRight="10dp"
+                                        android:orientation="horizontal">
+
+                                        <EditText
+                                            android:id="@+id/txtOutOfStockMedicines"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/input_text"
+                                            android:ems="10"
+                                            android:gravity="center"
+                                            android:hint="Search for Medicines"
+                                            android:inputType="textPersonName"
+                                            android:padding="10dp" />
+
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="15dp"
+                                    android:layout_marginRight="15dp"
+                                    android:layout_marginBottom="10dp"
+                                    app:cardBackgroundColor="@color/card_background"
+                                    app:cardCornerRadius="0dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginRight="10dp"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:padding="10dp">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Medicine Count"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:id="@+id/outofmedicines_count"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="5dp"
+                                            android:gravity="center"
+                                            android:text="200"
+                                            android:textSize="30sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
                     </TableRow>
 
                     <TableRow

@@ -2,10 +2,16 @@ package com.example.medicplus.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
+import android.preference.PreferenceManager;
+import android.widget.Toast;
+
+import com.example.medicplus.activity.OutOfStockMedicines;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,9 +75,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_INVOICE_ITEM_PAYMENT_TYPE = "invoice_item_payment_type";
     private static final String KEY_INVOICE_ADD_DATE = "invoice_add_date";
     private static final String KEY_INVOICE_DATE_MONTH = "invoice_date_month";
+    private final Context context;
 
     public DatabaseHandler(Context context) {
         super(context, Environment.getExternalStorageDirectory() + File.separator + DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -527,6 +535,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
+    public int getOutOfStockMedicinesCount() {
+        int count = 0;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String countQuery = "SELECT  * FROM " + TABLE_MEDICINE + " WHERE " + KEY_MED_QUANTITY + " < " + prefs.getString("outOfMedicineLimit", "5");
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        count = cursor.getCount();
+        cursor.close();
+
+        return count;
+    }
+
+
 
     public List<medicinesCategory> getMedicineCategory() {
         List<medicinesCategory> contactList = new ArrayList<medicinesCategory>();
@@ -588,8 +609,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     public List<medicines> getOutOfStockMedicine() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
         List<medicines> contactList = new ArrayList<medicines>();
-        String selectQuery = "SELECT * FROM " + TABLE_MEDICINE + " WHERE " + KEY_MED_QUANTITY + " < 5";
+        String selectQuery = "SELECT * FROM " + TABLE_MEDICINE + " WHERE " + KEY_MED_QUANTITY + " < " + prefs.getString("outOfMedicineLimit", "5");
 
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -737,6 +760,40 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
 
+    public List<medicines> searchOutOfStockMedicine(String medicine_name) {
+        List<medicines> contactList = new ArrayList<medicines>();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String selectQuery = "SELECT * FROM " + TABLE_MEDICINE + " WHERE " + KEY_MED_QUANTITY + " < " + prefs.getString("outOfMedicineLimit", "5") + " AND " + KEY_MED_NAME + " LIKE '" + medicine_name + "%'";
+
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                medicines filemodal = new medicines();
+                filemodal.setID(Integer.parseInt(cursor.getString(0)));
+                filemodal.setMedicineName(cursor.getString(1));
+                filemodal.setMedicineBarcode(cursor.getString(2));
+                filemodal.setMedicineCategory(cursor.getString(3));
+                filemodal.setMedicineCompany(cursor.getString(4));
+                filemodal.setMedicineStrength(cursor.getString(5));
+                filemodal.setMedicineDescription(cursor.getString(6));
+                filemodal.setMedicineLocation(cursor.getString(7));
+                filemodal.setMedicineQuantity(cursor.getString(8));
+                filemodal.setMedicineExpiry(cursor.getString(9));
+                filemodal.setMedicineSellingPrice(cursor.getString(10));
+                filemodal.setMedicineImage(cursor.getBlob(11));
+                filemodal.setMedicineAddDate(cursor.getString(12));
+                contactList.add(filemodal);
+            } while (cursor.moveToNext());
+        }
+
+        return contactList;
+    }
+
+
+
 
 
 
@@ -777,6 +834,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public int searchCustomerCount(String customer_name) {
         int count = 0;
         String countQuery = "SELECT * FROM " + TABLE_CUSTOMER + " WHERE " + KEY_CUSTOMER_NAME + " LIKE '" + customer_name + "%'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        count = cursor.getCount();
+        cursor.close();
+
+        return count;
+    }
+
+
+    public int searchOutOfStockMedicineCount(String med_name) {
+        int count = 0;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String countQuery = "SELECT * FROM " + TABLE_MEDICINE + " WHERE " + KEY_MED_QUANTITY + " < " + prefs.getString("outOfMedicineLimit", "5") + " AND " + KEY_MED_NAME + " LIKE '" + med_name + "%'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         count = cursor.getCount();
