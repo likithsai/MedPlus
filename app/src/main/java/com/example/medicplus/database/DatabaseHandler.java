@@ -610,7 +610,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public List<medicines> getOutOfStockMedicine() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
         List<medicines> contactList = new ArrayList<medicines>();
         String selectQuery = "SELECT * FROM " + TABLE_MEDICINE + " WHERE " + KEY_MED_QUANTITY + " < " + prefs.getString("outOfMedicineLimit", "5");
 
