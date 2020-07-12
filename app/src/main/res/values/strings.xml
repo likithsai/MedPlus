@@ -3,4 +3,7 @@
     <string name="version">V 1.0</string>
     <string name="app_share_link" translatable="false">https://play.google.com/store/apps/details?id=tech.salroid.filmy</string>
     <string name="shareappdetails">Share application to other users</string>
+    <string name="no_items">No Items</string>
+    <string name="medicine_count">Medicine Count</string>
+    <string name="out_of_stock_medicines">Out Of Stock Medicines</string>
 </resources>

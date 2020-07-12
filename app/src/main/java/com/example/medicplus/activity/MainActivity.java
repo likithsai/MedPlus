@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
@@ -224,11 +225,37 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        loadHome();
-        loadInvoice();
-        loadMedicines();
-        loadManufacturer();
-        loadCustomer();
+//        loadHome();
+//        loadInvoice();
+//        loadMedicines();
+//        loadManufacturer();
+//        loadCustomer();
+
+//        Toast.makeText(this, "" + page.getDisplayedChild(), Toast.LENGTH_SHORT).show();
+
+        switch (page.getDisplayedChild()) {
+            case 0:
+                loadHome();
+                break;
+
+            case 1:
+                loadInvoice();
+                break;
+
+            case 2:
+                loadMedicines();
+                break;
+
+            case 3:
+                loadManufacturer();
+                break;
+
+            case 4:
+                loadCustomer();
+                break;
+
+        }
+        
     }
 
 

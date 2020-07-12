@@ -19,7 +19,7 @@
             android:gravity="center|top"
             android:orientation="vertical"
             android:visibility="visible"
-            tools:ignore="UselessLeaf">
+            tools:ignore="UselessLeaf,UselessParent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -29,17 +29,17 @@
                     android:id="@+id/emptyListview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No Items"
+                    android:text="@string/no_items"
                     android:drawableTop="@drawable/ic_warning"
                     android:drawableTint="#ccc"
                     android:drawablePadding="5dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="UnusedAttribute" />
 
                 <TableLayout
-                    android:id="@+id/tableLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:stretchColumns="0,1"
@@ -59,7 +59,7 @@
                             app:cardBackgroundColor="@color/colorPrimary"
                             app:cardCornerRadius="0dp"
                             app:layout_scrollFlags="scroll|enterAlways"
-                            tools:ignore="MissingConstraints">
+                            tools:ignore="MissingConstraints,UnusedAttribute">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -81,7 +81,8 @@
                                         android:layout_height="match_parent"
                                         android:layout_marginLeft="10dp"
                                         android:layout_marginRight="10dp"
-                                        android:orientation="horizontal">
+                                        android:orientation="horizontal"
+                                        tools:ignore="TooDeepLayout">
 
                                         <EditText
                                             android:id="@+id/txtOutOfStockMedicines"
@@ -92,7 +93,8 @@
                                             android:gravity="center"
                                             android:hint="Search for Medicines"
                                             android:inputType="textPersonName"
-                                            android:padding="10dp" />
+                                            android:padding="10dp"
+                                            android:importantForAutofill="no" />
 
                                     </LinearLayout>
 
@@ -119,7 +121,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Medicine Count"
+                                            android:text="@string/medicine_count"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -183,7 +185,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_back"
-                tools:ignore="VectorDrawableCompat" />
+                tools:ignore="ContentDescription,VectorDrawableCompat" />
 
             <TextView
                 android:id="@+id/textView"
@@ -191,11 +193,14 @@
                 android:layout_height="match_parent"
                 android:elevation="10dp"
                 android:gravity="center"
-                android:text="Out Of Stock Medicines"
+                android:text="@string/out_of_stock_medicines"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/title_font_size"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/but_back" />
+                app:layout_constraintStart_toEndOf="@+id/but_back"
+                tools:ignore="UnusedAttribute" />
+
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
