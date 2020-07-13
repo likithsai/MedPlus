@@ -37,7 +37,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_burger_menu"
-                        tools:ignore="VectorDrawableCompat" />
+                        tools:ignore="VectorDrawableCompat"
+                        android:contentDescription="TODO" />
 
                     <TextView
                         android:id="@+id/textView"
@@ -57,11 +58,11 @@
                         android:id="@+id/store"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_store"
+                        android:drawableStart="@drawable/ic_store"
                         android:drawablePadding="5dp"
                         android:drawableTint="@color/store_text_tint"
                         android:gravity="center"
-                        android:text="KMC Store, Mangalore"
+                        android:text="@string/kmc_store_mangalore"
                         android:textColor="@color/store_text_color"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -992,13 +993,14 @@
                             android:layout_marginRight="16dp"
                             android:layout_marginBottom="16dp"
                             android:clickable="true"
-                            android:text="Add Customers"
+                            android:text="@string/add_customers"
                             android:textColor="#fff"
                             app:icon="@drawable/ic_add"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            tools:ignore="MissingConstraints,VectorDrawableCompat" />
+                            tools:ignore="MissingConstraints,VectorDrawableCompat"
+                            android:focusable="true" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1013,6 +1015,7 @@
                 android:drawablePadding="5dp"
                 android:drawableTint="#ccc"
                 android:text="No Items"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

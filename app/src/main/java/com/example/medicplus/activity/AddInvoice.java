@@ -107,6 +107,7 @@ public class AddInvoice extends AppCompatActivity {
                  sel_qty.add("1");
 
                  lAdapter = new ListAdapterInvoice(AddInvoice.this, med_name, med_expiry, med_category, med_price, med_qty, med_img, sel_qty);
+                 lstItems.setEmptyView(findViewById(R.id.emptyListview));
                  lstItems.setAdapter(lAdapter);
                  txtMedicine.setText(null);
 

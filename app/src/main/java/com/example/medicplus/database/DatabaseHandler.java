@@ -13,8 +13,11 @@ import android.widget.Toast;
 import com.example.medicplus.activity.OutOfStockMedicines;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 @SuppressWarnings("ALL")
@@ -538,7 +541,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public int getOutOfStockMedicinesCount() {
         int count = 0;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        String countQuery = "SELECT  * FROM " + TABLE_MEDICINE + " WHERE " + KEY_MED_QUANTITY + " < " + prefs.getString("outOfMedicineLimit", "5");
+        String countQuery = "SELECT  * FROM " + TABLE_MEDICINE + " WHERE " + KEY_MED_QUANTITY + " < '" + prefs.getString("outOfMedicineLimit", "5") + "'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         count = cursor.getCount();
@@ -546,6 +549,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return count;
     }
+
+
+    public int getExpiredMedicinesCount() {
+        int count = 0;
+        String countQuery = "SELECT  * FROM " + TABLE_MEDICINE + " WHERE " + KEY_MED_EXPIRY_DATE + " < '" + new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(new Date()) + "'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        count = cursor.getCount();
+        cursor.close();
+
+        return count;
+    }
+
 
 
 
@@ -611,7 +627,39 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<medicines> getOutOfStockMedicine() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         List<medicines> contactList = new ArrayList<medicines>();
-        String selectQuery = "SELECT * FROM " + TABLE_MEDICINE + " WHERE " + KEY_MED_QUANTITY + " < " + prefs.getString("outOfMedicineLimit", "5");
+        String selectQuery = "SELECT * FROM " + TABLE_MEDICINE + " WHERE " + KEY_MED_QUANTITY + " < '" + prefs.getString("outOfMedicineLimit", "5") + "'";
+
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                medicines filemodal = new medicines();
+                filemodal.setID(Integer.parseInt(cursor.getString(0)));
+                filemodal.setMedicineName(cursor.getString(1));
+                filemodal.setMedicineBarcode(cursor.getString(2));
+                filemodal.setMedicineCategory(cursor.getString(3));
+                filemodal.setMedicineCompany(cursor.getString(4));
+                filemodal.setMedicineStrength(cursor.getString(5));
+                filemodal.setMedicineDescription(cursor.getString(6));
+                filemodal.setMedicineLocation(cursor.getString(7));
+                filemodal.setMedicineQuantity(cursor.getString(8));
+                filemodal.setMedicineExpiry(cursor.getString(9));
+                filemodal.setMedicineSellingPrice(cursor.getString(10));
+                filemodal.setMedicineImage(cursor.getBlob(11));
+                filemodal.setMedicineAddDate(cursor.getString(12));
+                contactList.add(filemodal);
+            } while (cursor.moveToNext());
+        }
+
+        return contactList;
+    }
+
+
+    public List<medicines> getExpiredMedicine() {
+        List<medicines> contactList = new ArrayList<medicines>();
+        String selectQuery = "SELECT * FROM " + TABLE_MEDICINE + " WHERE " + KEY_MED_EXPIRY_DATE + " < '" + new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(new Date()) + "'";
 
 
         SQLiteDatabase db = this.getWritableDatabase();

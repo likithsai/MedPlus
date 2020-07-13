@@ -260,6 +260,20 @@
     </ScrollView>
 
 
+    <TextView
+        android:id="@+id/emptyListview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ic_warning"
+        android:drawablePadding="5dp"
+        android:drawableTint="#ccc"
+        android:text="@string/no_items"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        tools:ignore="UnusedAttribute" />
+
     <ListView
         android:id="@+id/lst_items"
         android:layout_width="match_parent"
@@ -363,7 +377,7 @@
                     android:layout_weight="1"
                     android:elevation="10dp"
                     android:gravity="right|center"
-                    android:text="$ 0"
+                    android:text="AUD 0"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/title_font_size"
                     android:textStyle="bold"

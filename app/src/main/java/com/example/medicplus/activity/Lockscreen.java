@@ -34,6 +34,7 @@ public class Lockscreen extends AppCompatActivity {
         LockView = findViewById(R.id.blurlockview);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+
         intent = getIntent();
         if(intent.getBooleanExtra("SET_PASSCODE", false)) {
 

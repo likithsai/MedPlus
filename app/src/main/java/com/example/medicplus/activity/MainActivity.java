@@ -265,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void loadHome() {
+        findViewById(R.id.emptyListview).setVisibility(View.GONE);
         showTotalSalesChart();
         showCategoryWiseContribution();
     }

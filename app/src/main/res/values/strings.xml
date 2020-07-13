@@ -6,4 +6,7 @@
     <string name="no_items">No Items</string>
     <string name="medicine_count">Medicine Count</string>
     <string name="out_of_stock_medicines">Out Of Stock Medicines</string>
+    <string name="expired_medicines">Expired Medicines</string>
+    <string name="add_customers">Add Customers</string>
+    <string name="kmc_store_mangalore">KMC Store, Mangalore</string>
 </resources>
