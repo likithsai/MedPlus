@@ -483,6 +483,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return count;
     }
 
+
+    public float getTotalSales() {
+        float count = 0;
+        String countQuery = "SELECT  SUM(" + KEY_INVOICE_ITEM_PRICE + ") FROM " + TABLE_INVOICE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        count = cursor.getCount();
+        cursor.close();
+
+        return count;
+    }
+
+
+
+
     public int getManufacturerCount() {
         int count = 0;
         String countQuery = "SELECT  * FROM " + TABLE_MANUFACTURER;
@@ -507,12 +522,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public int getMedicineCategoryCount() {
+        int count = 0;
         String countQuery = "SELECT  * FROM " + TABLE_MEDICINE_CATEGORY;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
+        count = cursor.getCount();
         cursor.close();
 
-        return cursor.getCount();
+        return count;
     }
 
 
@@ -905,6 +922,31 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
 
+
+
+
+
+    public List<TotalSalesChartHandler> getMonthWiseData() {
+
+        List<TotalSalesChartHandler> data = new ArrayList<>();
+        String selectQuery = "SELECT " + KEY_INVOICE_DATE_MONTH + ", SUM(" + KEY_INVOICE_ITEM_PRICE + " * " + KEY_INVOICE_ITEM_QTY + ") FROM " + TABLE_INVOICE + " GROUP BY " + KEY_INVOICE_DATE_MONTH;
+
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                TotalSalesChartHandler filemodal = new TotalSalesChartHandler();
+                filemodal.setSalesMonth(cursor.getString(0));
+                filemodal.setTotalSales(Float.parseFloat(cursor.getString(1)));
+
+                data.add(filemodal);
+            } while (cursor.moveToNext());
+        }
+
+        return data;
+    }
 
 
 

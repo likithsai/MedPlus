@@ -36,17 +36,21 @@ import com.example.medicplus.adapter.ListAdapterManufacturer;
 import com.example.medicplus.adapter.ListAdapterMedicines;
 import com.example.medicplus.adapter.ListAdapterStores;
 import com.example.medicplus.database.DatabaseHandler;
+import com.example.medicplus.database.TotalSalesChartHandler;
 import com.example.medicplus.database.invoice;
 import com.example.medicplus.database.medicines;
 import com.example.medicplus.utils.DBUtils;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -61,7 +65,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class MainActivity extends AppCompatActivity {
     EditText txtMedicines, txtManufacturer, txtCustomer, txtInvoice;
     ImageView but_settings, btn_drawer;
-    TextView medicine_count, manufacturer_count, customer_count, invoice_count, store;
+    TextView medicine_count, manufacturer_count, customer_count, invoice_count, store, txtCategory, totalSales;
     BottomNavigationView bottomBar;
     public DatabaseHandler db;
     ListView lst, lst_invoice, lst_manufacturer, lst_customer;
@@ -73,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     private List<invoice> invoice;
     private List<com.example.medicplus.database.manufacturer> manufacturer;
     private List<com.example.medicplus.database.customer> customer;
+    private List<TotalSalesChartHandler> totalSalesHandler;
     private DrawerLayout dl;
     ViewFlipper page;
     private List<com.example.medicplus.database.store> store_data;
@@ -109,15 +114,17 @@ public class MainActivity extends AppCompatActivity {
         txtManufacturer = findViewById(R.id.txtManufacturer);
         txtCustomer = findViewById(R.id.txtCustomer);
         displayOptions = findViewById(R.id.displayOptions);
+        totalSales = findViewById(R.id.totalSales);
+        txtCategory = findViewById(R.id.txtCategory);
         dl = findViewById(R.id.activity_main);
         store = findViewById(R.id.store);
         page = findViewById(R.id.page);
         //page.setInAnimation(this, android.R.anim.slide_in_left);
         //page.setOutAnimation(this, android.R.anim.slide_out_right);
 
-        loadHome();
-
         db = new DatabaseHandler(MainActivity.this);
+
+        loadHome();
 
         store.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -266,6 +273,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadHome() {
         findViewById(R.id.emptyListview).setVisibility(View.GONE);
+        txtCategory.setText("" + db.getMedicineCategoryCount());
+        totalSales.setText("" + db.getTotalSales());
+
         showTotalSalesChart();
         showCategoryWiseContribution();
     }
@@ -1109,20 +1119,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void showTotalSalesChart() {
         LineChart chart = (LineChart) findViewById(R.id.chart1);
-
         ArrayList<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(1, ThreadLocalRandom.current().nextInt(1, 100)));
-        entries.add(new Entry(2, ThreadLocalRandom.current().nextInt(1, 100)));
-        entries.add(new Entry(3, ThreadLocalRandom.current().nextInt(1, 100)));
-        entries.add(new Entry(4, ThreadLocalRandom.current().nextInt(1, 100)));
-        entries.add(new Entry(5, ThreadLocalRandom.current().nextInt(1, 100)));
-        entries.add(new Entry(6, ThreadLocalRandom.current().nextInt(1, 100)));
-        entries.add(new Entry(7, ThreadLocalRandom.current().nextInt(1, 100)));
-        entries.add(new Entry(8, ThreadLocalRandom.current().nextInt(1, 100)));
-        entries.add(new Entry(9, ThreadLocalRandom.current().nextInt(1, 100)));
-        entries.add(new Entry(10, ThreadLocalRandom.current().nextInt(1, 100)));
-        entries.add(new Entry(11, ThreadLocalRandom.current().nextInt(1, 100)));
-        entries.add(new Entry(12, ThreadLocalRandom.current().nextInt(1, 100)));
+        final ArrayList<String> xEntries = new ArrayList<>();
+
+        totalSalesHandler =  db.getMonthWiseData();
+        for(int i=0; i<totalSalesHandler.size(); i++) {
+            entries.add(new Entry(i+1, totalSalesHandler.get(i).getTotalSales()));
+            xEntries.add(totalSalesHandler.get(i).getSalesMonth());
+        }
 
         LineDataSet lineDataSet = new LineDataSet(entries, "Total Sales");
         lineDataSet.setDrawFilled(true);
@@ -1142,21 +1146,32 @@ public class MainActivity extends AppCompatActivity {
         chart.getAxisRight().setEnabled(false);
         chart.getAxisRight().setDrawGridLines(false);
         chart.getAxisLeft().setDrawGridLines(false);
-        chart.getAxisRight().setStartAtZero(false);
-        chart.getAxisLeft().setStartAtZero(false);
+//        chart.getAxisRight().setStartAtZero(false);
+//        chart.getAxisLeft().setStartAtZero(false);
         chart.setDrawGridBackground(false);
         chart.getXAxis().setAvoidFirstLastClipping(true);
         chart.getXAxis().setDrawGridLines(false);
         chart.getLegend().setEnabled(false);
         chart.setBackgroundColor(Color.TRANSPARENT);
         chart.setDragEnabled(true);
-        chart.setScaleYEnabled(false);
+        chart.setScaleYEnabled(true);
         chart.setScaleXEnabled(true);
         chart.setDescription(null);
         chart.setExtraTopOffset(10f);
         chart.setDrawBorders(false);
-//        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-        chart.getXAxis().setEnabled(false);
+        chart.setExtraOffsets(15, 0, 75, 15);
+
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        chart.getXAxis().setGranularity(1f);
+        chart.getXAxis().setGranularityEnabled(true);
+        chart.getXAxis().setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axisBase) {
+                return xEntries.get( (int) value % xEntries.size() );
+            }
+        });
+
+        //chart.getXAxis().setEnabled(false);
         chart.setTouchEnabled(true);
         chart.invalidate();
     }
