@@ -486,12 +486,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public float getTotalSales() {
         float count = 0;
-        String countQuery = "SELECT  SUM(" + KEY_INVOICE_ITEM_PRICE + ") FROM " + TABLE_INVOICE;
+        String countQuery = "SELECT  SUM(" + KEY_INVOICE_ITEM_PRICE + "*" + KEY_INVOICE_ITEM_QTY + ") as Total FROM " + TABLE_INVOICE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
-        count = cursor.getCount();
-        cursor.close();
 
+        if( cursor.moveToFirst() ) {
+            count = cursor.getFloat(cursor.getColumnIndex("Total"));
+        }
+        cursor.close();
         return count;
     }
 
@@ -948,6 +950,29 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return data;
     }
 
+
+
+    public List<TotalCategoryChartHandler> getChartCategory() {
+
+        List<TotalCategoryChartHandler> data = new ArrayList<>();
+        String selectQuery = "SELECT " + KEY_MED_CATEGORY + ", COUNT(" + KEY_MED_NAME + ") FROM " + TABLE_MEDICINE + " GROUP BY " + KEY_MED_CATEGORY;
+
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                TotalCategoryChartHandler filemodal = new TotalCategoryChartHandler();
+                filemodal.setCategoryName(cursor.getString(0));
+                filemodal.setCategoryValue(Float.parseFloat(cursor.getString(1)));
+
+                data.add(filemodal);
+            } while (cursor.moveToNext());
+        }
+
+        return data;
+    }
 
 
 

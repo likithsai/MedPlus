@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -36,14 +37,20 @@ import com.example.medicplus.adapter.ListAdapterManufacturer;
 import com.example.medicplus.adapter.ListAdapterMedicines;
 import com.example.medicplus.adapter.ListAdapterStores;
 import com.example.medicplus.database.DatabaseHandler;
+import com.example.medicplus.database.TotalCategoryChartHandler;
 import com.example.medicplus.database.TotalSalesChartHandler;
 import com.example.medicplus.database.invoice;
 import com.example.medicplus.database.medicines;
 import com.example.medicplus.utils.DBUtils;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -51,7 +58,9 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -78,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
     private List<com.example.medicplus.database.manufacturer> manufacturer;
     private List<com.example.medicplus.database.customer> customer;
     private List<TotalSalesChartHandler> totalSalesHandler;
+    private List<TotalCategoryChartHandler> categoryContribution;
     private DrawerLayout dl;
     ViewFlipper page;
     private List<com.example.medicplus.database.store> store_data;
@@ -352,10 +362,25 @@ public class MainActivity extends AppCompatActivity {
         lst_invoice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                View bottom_option = getLayoutInflater().inflate(R.layout.activity_view_medicine, null);
+
+                View bottom_option = getLayoutInflater().inflate(R.layout.activity_view_invoice, null);
+
+                TextView inv_name = (TextView) bottom_option.findViewById(R.id.invoice_name);
+                TextView inv_id = (TextView) bottom_option.findViewById(R.id.invoice_id);
+                TextView inv_payment_type = (TextView) bottom_option.findViewById(R.id.invoice_payment_type);
+                TextView inv_price = (TextView) bottom_option.findViewById(R.id.invoice_price);
+                TextView inv_qty = (TextView) bottom_option.findViewById(R.id.invoice_qty);
+
+                inv_name.setText(invoice_desc.get(i));
+                inv_id.setText("Invoice ID: " + invoice_date.get(i));
+                inv_price.setText("₹ " + invoice_price.get(i));
+                inv_payment_type.setText(invoice_payment_type.get(i));
+                inv_qty.setText("Qty : " + invoice_qty.get(i));
+
                 BottomSheetDialog dialog = new BottomSheetDialog(MainActivity.this);
                 dialog.setContentView(bottom_option);
                 dialog.show();
+
             }
         });
 
@@ -1123,59 +1148,61 @@ public class MainActivity extends AppCompatActivity {
         final ArrayList<String> xEntries = new ArrayList<>();
 
         totalSalesHandler =  db.getMonthWiseData();
-        for(int i=0; i<totalSalesHandler.size(); i++) {
-            entries.add(new Entry(i+1, totalSalesHandler.get(i).getTotalSales()));
-            xEntries.add(totalSalesHandler.get(i).getSalesMonth());
-        }
 
-        LineDataSet lineDataSet = new LineDataSet(entries, "Total Sales");
-        lineDataSet.setDrawFilled(true);
-        lineDataSet.setFillDrawable(ContextCompat.getDrawable(this, R.drawable.chart_fillcolor));
-        lineDataSet.setValueTextSize(10);
-        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        lineDataSet.setLineWidth(2f);
-        lineDataSet.setColor(R.color.colorPrimary);
-        lineDataSet.setCircleColor(R.color.colorPrimary);
-        lineDataSet.setCircleColorHole(R.color.colorPrimary);
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(lineDataSet);
-        LineData data = new LineData(dataSets);
-        chart.setData(data);
+        if( totalSalesHandler.size() > 0 ) {
+            for (int i = 0; i < totalSalesHandler.size(); i++) {
+                entries.add(new Entry(i + 1, totalSalesHandler.get(i).getTotalSales()));
+                xEntries.add(totalSalesHandler.get(i).getSalesMonth());
+            }
 
-        chart.getAxisLeft().setEnabled(false);
-        chart.getAxisRight().setEnabled(false);
-        chart.getAxisRight().setDrawGridLines(false);
-        chart.getAxisLeft().setDrawGridLines(false);
+            LineDataSet lineDataSet = new LineDataSet(entries, "Total Sales");
+            lineDataSet.setDrawFilled(true);
+            lineDataSet.setFillDrawable(ContextCompat.getDrawable(this, R.drawable.chart_fillcolor));
+            lineDataSet.setValueTextSize(10);
+            lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            lineDataSet.setLineWidth(2f);
+            lineDataSet.setColor(R.color.colorPrimary);
+            lineDataSet.setCircleColor(R.color.colorPrimary);
+            lineDataSet.setCircleColorHole(R.color.colorPrimary);
+            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+            dataSets.add(lineDataSet);
+            LineData data = new LineData(dataSets);
+            chart.setData(data);
+
+            chart.getAxisLeft().setEnabled(false);
+            chart.getAxisRight().setEnabled(false);
+            chart.getAxisRight().setDrawGridLines(false);
+            chart.getAxisLeft().setDrawGridLines(false);
 //        chart.getAxisRight().setStartAtZero(false);
 //        chart.getAxisLeft().setStartAtZero(false);
-        chart.setDrawGridBackground(false);
-        chart.getXAxis().setAvoidFirstLastClipping(true);
-        chart.getXAxis().setDrawGridLines(false);
-        chart.getLegend().setEnabled(false);
-        chart.setBackgroundColor(Color.TRANSPARENT);
-        chart.setDragEnabled(true);
-        chart.setScaleYEnabled(true);
-        chart.setScaleXEnabled(true);
-        chart.setDescription(null);
-        chart.setExtraTopOffset(10f);
-        chart.setDrawBorders(false);
-        chart.setExtraOffsets(15, 0, 75, 15);
+            chart.setDrawGridBackground(false);
+            chart.getXAxis().setAvoidFirstLastClipping(true);
+            chart.getXAxis().setDrawGridLines(false);
+            chart.getLegend().setEnabled(false);
+            chart.setBackgroundColor(Color.TRANSPARENT);
+            chart.setDragEnabled(true);
+            chart.setScaleYEnabled(true);
+            chart.setScaleXEnabled(true);
+            chart.setDescription(null);
+            chart.setExtraTopOffset(10f);
+            chart.setDrawBorders(false);
+            chart.setExtraOffsets(15, 0, 15, 15);
 
-        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-        chart.getXAxis().setGranularity(1f);
-        chart.getXAxis().setGranularityEnabled(true);
-        chart.getXAxis().setValueFormatter(new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axisBase) {
-                return xEntries.get( (int) value % xEntries.size() );
-            }
-        });
+            chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+            chart.getXAxis().setGranularity(1f);
+            chart.getXAxis().setGranularityEnabled(true);
+            chart.getXAxis().setValueFormatter(new IAxisValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, AxisBase axisBase) {
+                    return xEntries.get((int) value % xEntries.size());
+                }
+            });
 
-        //chart.getXAxis().setEnabled(false);
-        chart.setTouchEnabled(true);
-        chart.invalidate();
+            //chart.getXAxis().setEnabled(false);
+            chart.setTouchEnabled(true);
+            chart.invalidate();
+        }
     }
-
 
 
 
@@ -1183,32 +1210,47 @@ public class MainActivity extends AppCompatActivity {
         PieChart chart = (PieChart) findViewById(R.id.categoryChart);
 
         ArrayList<PieEntry> pieEntries = new ArrayList<>();
-        pieEntries.add(new PieEntry(2f, 0));
-        pieEntries.add(new PieEntry(4f, 1));
-        pieEntries.add(new PieEntry(6f, 2));
-        pieEntries.add(new PieEntry(8f, 3));
-        pieEntries.add(new PieEntry(7f, 4));
-        pieEntries.add(new PieEntry(3f, 5));
+        categoryContribution =  db.getChartCategory();
 
-        PieDataSet pieDataSet = new PieDataSet(pieEntries, "categories");
-        pieDataSet.setColors(
-                Color.parseColor("#1A00e676"),
-                Color.parseColor("#3300e676"),
-                Color.parseColor("#4D00e676"),
-                Color.parseColor("#6600e676"),
-                Color.parseColor("#8000e676"),
-                Color.parseColor("#9900e676"),
-                Color.parseColor("#B300e676"),
-                Color.parseColor("#CC00e676"),
-                Color.parseColor("#E600e676")
-        );
+        if( categoryContribution.size() > 0 ) {
+            for (int i = 0; i < categoryContribution.size(); i++) {
+                pieEntries.add(new PieEntry(categoryContribution.get(i).getCategoryValue(), categoryContribution.get(i).getCategoryName()));
+            }
 
-        chart.setData(new PieData(pieDataSet));
-        chart.getLegend().setEnabled(false);
-        chart.setBackgroundColor(Color.TRANSPARENT);
-        chart.setDescription(null);
-        chart.setExtraTopOffset(10f);
-        chart.invalidate();
+            PieDataSet pieDataSet = new PieDataSet(pieEntries, "categories");
+            pieDataSet.setSliceSpace(5f);
+            pieDataSet.setDrawValues(false);
+            pieDataSet.setColors(new int[] {
+                    Color.parseColor("#E0F2F1"),
+                    Color.parseColor("#B2DFDB"),
+                    Color.parseColor("#80CBC4"),
+                    Color.parseColor("#4DB6AC"),
+                    Color.parseColor("#26A69A"),
+                    Color.parseColor("#009688"),
+                    Color.parseColor("#00897B"),
+                    Color.parseColor("#00796B"),
+                    Color.parseColor("#00695C"),
+                    Color.parseColor("#004D40"),
+                    Color.parseColor("#A7FFEB"),
+                    Color.parseColor("#64FFDA"),
+                    Color.parseColor("#1DE9B6"),
+                    Color.parseColor("#00BFA5")
+            });
+
+            chart.setDrawHoleEnabled(false);
+            chart.setTransparentCircleRadius(0f);
+            chart.getLegend().setEnabled(false);
+            chart.setBackgroundColor(Color.TRANSPARENT);
+            chart.setDescription(null);
+            chart.setExtraTopOffset(10f);
+            chart.setHoleRadius(25f);
+            chart.setTransparentCircleAlpha(0);
+            chart.setEntryLabelColor(Color.WHITE);
+            chart.setCenterTextSize(10);
+            chart.setUsePercentValues(true);
+            chart.setData(new PieData(pieDataSet));
+            chart.invalidate();
+        }
 
     }
 

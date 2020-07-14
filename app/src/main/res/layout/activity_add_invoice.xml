@@ -409,7 +409,7 @@
                     android:id="@+id/inv_qty_picker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:custom_layout="@layout/number_picker_custom_layout"
+                    app:custom_layout="@layout/custom_discount_picker"
                     app:max="100"
                     app:min="0"
                     app:value="0"
